@@ -1,0 +1,18 @@
+POST https://messagingapp2021.azurewebsites.net/register
+content-type: application/json
+
+{"username":"username",
+"password":"password"}
+
+###
+POST https://messagingapp2021.azurewebsites.net//message/write 
+
+content-type: application/json,
+Authorization: Basic username:password
+
+{
+            "receiver": "d",
+            "subject": "first message",
+            "message": "my first message"           
+}
+
