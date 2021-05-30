@@ -12,13 +12,14 @@ db = SQLAlchemy(app)
 sess = Session()
 # set Configurations
 app.config.from_pyfile("../config.py")
-
+# initiolize session with flask app
 sess.init_app(app)
 
-
+# import routes so we can register them to our app
 from app.routes.user_routes import user_routes
 from app.routes.message_routes import message_routes
 
+# register routes to app
 app.register_blueprint(user_routes)
 app.register_blueprint(message_routes)
 

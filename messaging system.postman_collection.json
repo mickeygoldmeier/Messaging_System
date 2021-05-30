@@ -1,0 +1,209 @@
+{
+	"info": {
+		"_postman_id": "1f7ba1bf-930a-4530-86e1-1cd564c348fd",
+		"name": "messaging system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register new user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"username\",\r\n\"password\":\"password\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://messagingapp2021.azurewebsites.net/register",
+					"protocol": "https",
+					"host": [
+						"messagingapp2021",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"register"
+					]
+				},
+				"description": "here you can register to the system by sending a post request with your username and password.\nin format \n{\n\"username\":\"name\",\n\"password\":\"mypassword\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"name\",\r\n\"password\":\"password\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://messagingapp2021.azurewebsites.net/login",
+					"protocol": "https",
+					"host": [
+						"messagingapp2021",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "login to the system by sending a post request with your username and password in json format\n{\"username\":\"name\",\n\"password\":\"password\"}"
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null,
+				"description": "after loging in your user is saved in the the system until you logout so when you finish logout."
+			},
+			"response": []
+		},
+		{
+			"name": "delete message by id as a part of the url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://messagingapp2021.azurewebsites.net/messages/delete/2",
+					"protocol": "https",
+					"host": [
+						"messagingapp2021",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"messages",
+						"delete",
+						"2"
+					]
+				},
+				"description": "once you are logged in if you know your message id you can send a get request and delete the message the id is passed as part of the url"
+			},
+			"response": []
+		},
+		{
+			"name": "read message by id as a part of the url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://messagingapp2021.azurewebsites.net/messages/read/2",
+					"protocol": "https",
+					"host": [
+						"messagingapp2021",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"messages",
+						"read",
+						"2"
+					]
+				},
+				"description": "once you are logged in if you know your message id you can send a get request and read the message the id is passed as part of the url"
+			},
+			"response": []
+		},
+		{
+			"name": "send message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"receiver\": \"elad\",\r\n            \"subject\": \"urgent!!!!!\",\r\n            \"message\": \"my first message and i love it\"           \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://messagingapp2021.azurewebsites.net/messages/send",
+					"protocol": "https",
+					"host": [
+						"messagingapp2021",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"messages",
+						"send"
+					]
+				},
+				"description": "you can send a message to a friend if you want to by adding the message and your friends username to body of the post request"
+			},
+			"response": []
+		},
+		{
+			"name": "read messages i sent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"username\":\"all\",\r\n            \"onlyunread\":True,       \r\n}"
+				},
+				"url": {
+					"raw": "https://messagingapp2021.azurewebsites.net/messages/readall/sent",
+					"protocol": "https",
+					"host": [
+						"messagingapp2021",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"messages",
+						"readall",
+						"sent"
+					]
+				},
+				"description": "if you dont know a specific id of a message or you want to read more then 1 message at a time, you can request all messages.\nthe username parameter is for requesting messages you sent to a specific user or \"all\" if you want to see all messages you sent to all users.\nthe onlyunread parameter is to request only message that the reciever didnt read yet or all messages."
+			},
+			"response": []
+		},
+		{
+			"name": "read messages i recieved",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"username\":\"all\",\r\n            \"onlyunread\":True,       \r\n}"
+				},
+				"url": {
+					"raw": "https://messagingapp2021.azurewebsites.net/messages/readall",
+					"protocol": "https",
+					"host": [
+						"messagingapp2021",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"messages",
+						"readall"
+					]
+				},
+				"description": "if you dont know a specific id of a message or you want to read more then 1 message at a time, you can request all messages.\nthe username parameter is for requesting messages you received from a specific user or \"all\" if you want to see all messages you received from all users.\nthe onlyunread parameter is to request only message that you didnt read yet or all messages."
+			},
+			"response": []
+		}
+	]
+}

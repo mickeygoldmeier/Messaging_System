@@ -46,15 +46,15 @@ def read_all():
         data = request.get_json()
         messages_from = data["username"]
         try:
-            onlyread = data["onlyread"]
+            onlyunread = data["onlyunread"]
         except:
-            onlyread = False
+            onlyunread = False
     except:
         abort(
             400, "you are missing parameters!"
         )  #  message_list = Message.query.filter_by(receiverId=)
     message_list = get_all_messages(
-        id=session["userID"], onlyread=onlyread, secondId=messages_from
+        id=session["userID"], onlyunread=onlyunread, secondId=messages_from
     )
     if not message_list:
         abort(400, "no messeges.")
@@ -80,13 +80,13 @@ def read_all_sent():
         data = request.get_json()
         messages_to = data["username"]
         try:
-            onlyread = data["onlyread"]
+            onlyunread = data["onlyunread"]
         except:
-            onlyread = False
+            onlyunread = False
     except:
         abort(400, "you are missing parameters!")
     message_list = get_all_messages(
-        id=session["userID"], sender=True, onlyread=onlyread, secondId=messages_to
+        id=session["userID"], sender=True, onlyunread=onlyunread, secondId=messages_to
     )
     if not message_list:
         abort(400, "no messeges.")
@@ -120,25 +120,45 @@ def write_message():
 
 
 ## get list of all messages by id of sender or receiver
-def get_all_messages(id, sender=False, onlyread=False, secondId="all"):
-    # IF ASKED FOR SENDER
+def get_all_messages(id, sender=False, onlyunread=False, secondId="all"):
+    """
+    the function gets 4 parameters:
+    id: the id of the user rquesting the messages
+    sender: a bool parameter the is true if id belonges to sender of the message
+    onlyunread: bool parameter that is true if requested onlyunread messages
+    seconedId: id of the user you want to read your messages with or all for all messages
+
+    the function returns a list of messages according to what was requested
+    """
+
+    # if the request is from sender
     if sender:
+        # if requested for specific user message
         if not secondId == "all":
-            if onlyread:
+            # if requested for only unread messages
+            if onlyunread:
                 return Message.query.filter_by(
                     sendrId=id, receiverId=secondId, is_read=False
                 ).all()
-        if onlyread:
+        # if requsted messages from all users
+        # if requested for only unread message
+        if onlyunread:
             return Message.query.filter_by(sendrId=id, is_read=False).all()
+        # if requested all users and all messages
         return Message.query.filter_by(sendrId=id).all()
 
-    # if not asked for sender it gets all by reciever and returns the list
+    # if not requested by sender
+    # if requested for specific user message
     if not secondId == "all":
-        if onlyread:
+        # if requested for only unread messages
+        if onlyunread:
             return Message.query.filter_by(
                 sendrId=secondId, receiverId=id, is_read=False
             ).all()
-    if onlyread:
+    # if requsted messages from all users
+    # if requested for only unread messages
+    if onlyunread:
         return Message.query.filter_by(receiverId=id, is_read=False).all()
+    # if requested all users and all messages
     return Message.query.filter_by(receiverId=id).all()
 
