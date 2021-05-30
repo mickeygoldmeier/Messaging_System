@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'messagingApp2021'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_da7604e69044461ebfa4c5d1e232b5a2 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_0ce279838af84bef9ce707a23f05da26 }}
