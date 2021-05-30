@@ -1,25 +1,20 @@
-# Import flask and template operators
-
-from flask import Flask, render_template
-
-# Import SQLAlchemy
+# Import flask ,SQLAlchemy and session
+from flask import Flask
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 
 
 # Define the WSGI application object
 app = Flask(__name__)
-CORS(app)
-# Configurations
+# Define the database object
+db = SQLAlchemy(app)
+# Define the session object
+sess = Session()
+# set Configurations
 app.config.from_pyfile("../config.py")
 
-# Define the database object which is imported
-# by modules and controllers
-db = SQLAlchemy(app)
+sess.init_app(app)
 
-from flask_httpauth import HTTPBasicAuth
-
-auth = HTTPBasicAuth()
 
 from app.routes.user_routes import user_routes
 from app.routes.message_routes import message_routes

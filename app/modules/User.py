@@ -1,10 +1,10 @@
-from app import db, auth
-import config
+from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model):
-    """Data model for user accounts."""
+    """Data model for user accounts.
+        the class containes in id, username, hased password and the date the user was created."""
 
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
@@ -12,29 +12,17 @@ class User(db.Model):
     password = db.Column(db.String(192), nullable=False)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    # class method for hashing the password
     def hash_password(self, password):
         self.password = generate_password_hash(password)
 
+    # class method for verifeing password when user wants to signin
     def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password, password)
 
+    # save to db after changes were made or add to db if its anew user
     def save(self):
         if self not in db.session:
             db.session.add(self)
         db.session.commit()
-
-
-@auth.verify_password
-def verify_password(username, password):
-    print(username)
-    user = User.query.filter_by(username=username).first()
-
-    if not user or not user.verify_password(password):
-        return False
-    add_user_globel(user)
-    return True
-
-
-def add_user_globel(user):
-    config.user = user
 

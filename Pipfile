@@ -10,6 +10,9 @@ sqlalchemy = "*"
 flask-httpauth = "*"
 flask-login = "*"
 flask-cors = "*"
+flask-security = "*"
+flask-session = "*"
+redis = "*"
 
 [dev-packages]
 

@@ -1,4 +1,4 @@
-from flask import request, jsonify, Blueprint, abort
+from flask import request, jsonify, Blueprint, abort, session
 from datetime import datetime as dt
 from app import db, app
 import json
@@ -29,9 +29,25 @@ def register():
 
 @user_routes.route("/login", methods=["POST"])
 def login():
-    user_data = request.get_json()
-    new_user = User(user_data["username"], user_data["password"])
+    try:
+        data = request.get_json()
+        username = data["username"]
+        password = data["password"]
+    except:
+        abort(400, "you are missing parameters!")
 
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({"message": "regresration successful"})
+    user = User.query.filter_by(username=username).first()
+    if not user.verify_password(password):
+        abort(401, "password or user name are worng please try again or register!")
+    session["username"] = username
+    session["userID"] = user.id
+    return jsonify({"message": "you are logged in now"})
+
+
+@user_routes.route("/logout", methods=["POST", "GET"])
+def logout():
+
+    if not session["username"]:
+        abort(401, "you are not logged in yet!")
+    session["username"] = None
+    return jsonify({"message": "you are logged out now"})

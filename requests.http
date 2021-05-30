@@ -1,18 +1,50 @@
 POST https://messagingapp2021.azurewebsites.net/register
 content-type: application/json
 
-{"username":"username",
+{"username":"elad",
 "password":"password"}
 
 ###
-POST https://messagingapp2021.azurewebsites.net//message/write 
-
-content-type: application/json,
-Authorization: Basic username:password
+POST http://192.168.43.132:8080//messages/send
+content-type: application/json
 
 {
             "receiver": "d",
             "subject": "first message",
             "message": "my first message"           
 }
+
+###
+
+POST http://192.168.43.132:8080//login 
+content-type: application/json
+
+
+{
+            "username":"username",
+            "password"  :"password"       
+}
+
+###
+POST http://192.168.43.132:8080//logout
+content-type: application/json
+
+
+{
+            "username":"username",
+            "password"  :"password"       
+}
+###
+POST http://192.168.43.132:8080/messages/readall/sent
+content-type: application/json
+
+
+{
+            "username":"all"
+                   
+}
+###
+GET http://192.168.43.132:8080/messages/delete/1
+
+
 
