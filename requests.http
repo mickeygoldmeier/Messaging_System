@@ -1,7 +1,7 @@
 POST https://messagingapp2021.azurewebsites.net/register
 content-type: application/json
 
-{"username":"elad",
+{"username":"michael",
 "password":"password"}
 
 ###
